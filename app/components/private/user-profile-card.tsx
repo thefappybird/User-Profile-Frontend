@@ -30,11 +30,17 @@ export function UserProfileCard({ user, onEditClick }: UserProfileCardProps) {
               </p>
               <p className="text-foreground">{user?.email}</p>
             </div>
+            <Button
+              onClick={onEditClick}
+              className="bg-primary text-primary-foreground hover:bg-primary/90 md:hidden block"
+            >
+              Edit Profile
+            </Button>
           </div>
         </div>
         <Button
           onClick={onEditClick}
-          className="bg-primary text-primary-foreground hover:bg-primary/90"
+          className="bg-primary text-primary-foreground hover:bg-primary/90 sm:block hidden"
         >
           Edit Profile
         </Button>

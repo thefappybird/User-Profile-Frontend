@@ -1,87 +1,85 @@
-# Welcome to React Router!
+# User-Profile App Front-End Architecture
 
-A modern, production-ready template for building full-stack React applications using React Router.
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
-
-## Features
-
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
-
-## Getting Started
-
-### Installation
-
-Install the dependencies:
-
-```bash
-npm install
-```
-
-### Development
-
-Start the development server with HMR:
-
-```bash
-npm run dev
-```
-
-Your application will be available at `http://localhost:5173`.
-
-## Building for Production
-
-Create a production build:
-
-```bash
-npm run build
-```
-
-## Deployment
-
-### Docker Deployment
-
-To build and run using Docker:
-
-```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+## Overview
+This project is the front-end repository for the **User-Profile App**, designed with a focus on **modularity, state management, and user experience**. The application is built using **React**, **React Router**, and **Tailwind CSS**, with **Shadcn UI components** incorporated for cosmetic enhancements. It is designed to seamlessly work with the Node.js backend available [here](https://github.com/thefappybird/User-Profile_Backend).
 
 ---
 
-Built with ❤️ using React Router.
+## Front-End Architecture Design
+
+### Routing & Navigation
+- **React Router** is used for route management, including:
+  - Protecting sensitive routes via custom route guards.
+  - Pre-rendering data for improved performance and user experience.
+  - Supporting complex nested routes.
+
+### State Management
+- **React Context** handles broad application state, particularly for authentication.
+- This approach allows centralized access to user session data across all components.
+
+### UI & Styling
+- **Tailwind CSS** provides responsive and modular styling.
+- **Shadcn UI components** are used selectively for polished UI elements.
+- **Smart loading states** improve perceived performance and provide feedback during async operations.
+
+### Forms & Validation
+- **Zod** is used for form validation to ensure both front-end and back-end integrity.
+- Validation errors are shown interactively, providing immediate feedback to the user.
+
+### Utilities & Services
+- Utility files are organized based on their functionality for better modularization.
+- **Services** contain grouped async functions to interact with the backend efficiently.
+- This separation of concerns improves maintainability and scalability.
+
+---
+
+## Data Flow Diagram
+
+```text
++-------------+          +------------------+          +----------------+
+|             |          |                  |          |                |
+|   User      |  ---->   |  React Router    |  ---->   | Route Guards   |
+| (Browser)   |          |                  |          | & Pre-rendering|
++-------------+          +------------------+          +--------+-------+
+                                                                 |
+                                                                 v
+                                                      +----------------+
+                                                      |                |
+                                                      |  Context State |
+                                                      |  (Auth, UI)   |
+                                                      +--------+-------+
+                                                               |
+                                                               v
+                                                      +----------------+
+                                                      |                |
+                                                      |  Components    |
+                                                      | (Pages, Forms) |
+                                                      +--------+-------+
+                                                               |
+                                                               v
+                                                      +----------------+
+                                                      |                |
+                                                      |  Services /    |
+                                                      |  Utilities     |
+                                                      +--------+-------+
+                                                               |
+                                                               v
+                                                      +----------------+
+                                                      |                |
+                                                      |  Backend API   |
+                                                      | (Node.js App)  |
+                                                      +----------------+
+```
+
+---
+
+## Development Practices
+
+- **Modularization**: Components, utilities, and services are organized for scalability.
+- **Interactive UX**: Loading states, validation messages, and smart UI updates improve user experience.
+- **Backend Integration**: Services handle all API interactions, abstracting backend complexity from UI components.
+
+---
+
+## Summary
+This front-end architecture emphasizes **clean routing**, **centralized state management**, and **responsive user experience**. React Context, React Router, and Tailwind are leveraged to create a modular, maintainable, and visually appealing application. Utility and service files ensure separation of concerns, while validation and smart UI feedback enhance interactivity and reliability.
